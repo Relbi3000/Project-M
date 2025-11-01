@@ -1,0 +1,8 @@
+torch
+torchaudio
+numpy
+opencv-python
+facenet-pytorch
+speechbrain
+pydub
+ffmpeg-python
