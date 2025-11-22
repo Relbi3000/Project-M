@@ -4,6 +4,7 @@ import numpy as np
 from facenet_pytorch import MTCNN
 from typing import List
 
+
 class FaceExtractor:
     def __init__(self, device: str | None = None, image_size: int = 224):
         self.device = device or ("cuda" if torch.cuda.is_available() else "cpu")
@@ -11,12 +12,12 @@ class FaceExtractor:
         self.image_size = image_size
 
     def extract_faces_from_frame(self, frame_bgr) -> List[np.ndarray]:
-        """Возвращает список кропов лиц в формате numpy BGR, каждый размера image_size x image_size."""
+        """Извлекает лица из кадра (NumPy BGR) и приводит их к размеру image_size x image_size."""
         if frame_bgr is None:
             return []
         rgb = cv2.cvtColor(frame_bgr, cv2.COLOR_BGR2RGB)
         boxes, _ = self.mtcnn.detect(rgb)
-        crops = []
+        crops: List[np.ndarray] = []
         if boxes is None:
             return crops
         h, w, _ = rgb.shape
@@ -27,5 +28,5 @@ class FaceExtractor:
             if face.size == 0:
                 continue
             face = cv2.resize(face, (self.image_size, self.image_size))
-            crops.append(cv2.cvtColor(face, cv2.COLOR_RGB2BGR))  # вернуть BGR
+            crops.append(cv2.cvtColor(face, cv2.COLOR_RGB2BGR))  # возвращаем BGR
         return crops

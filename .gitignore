@@ -1,21 +1,38 @@
-# Игнорируем виртуальное окружение
+# Virtual environments & secrets
+.venv/
 venv/
-.env/
+ENV/
+env/
+.env
+.env.*
 
-# Кэш Python
+# Python artefacts
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
+*.so
+*.egg-info/
+.eggs/
+build/
+dist/
+.cache/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
 
-# Системные файлы
+# Logs & temp
+*.log
+*.tmp
+
+# OS/IDE
 .DS_Store
 Thumbs.db
-
-# IDE
 .vscode/
 .idea/
 
-# Логи, временные файлы
-*.log
-*.tmp
+# Project-specific
+pretrained_models/
+results/

@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="panel">
+  <h2>Результат анализа</h2>
+  <p><strong>Файл:</strong> {{ filename }}</p>
+
+  {% if error %}
+    <div class="alert error">{{ error }}</div>
+  {% else %}
+    {% if result %}
+      <div class="result">
+        <div class="result-row">
+          <div class="key">Метка</div>
+          <div class="val"><span class="label {{ result.label }}">{{ result.label }}</span></div>
+          <div class="exp">{{ explanations.label }}</div>
+        </div>
+
+        <div class="result-row">
+          <div class="key">Уверенность</div>
+          <div class="val">{{ explanations.confidence }}</div>
+          <div class="exp"></div>
+        </div>
+
+        <div class="result-row">
+          <div class="key">Тип данных</div>
+          <div class="val">{{ result.type }}</div>
+          <div class="exp">{{ explanations.type }}</div>
+        </div>
+
+        {% if result.probabilities %}
+        <div class="result-row">
+          <div class="key">probabilities.deepfake</div>
+          <div class="val">{{ '%.4f' % result.probabilities.deepfake if result.probabilities.deepfake is not none else '-' }}</div>
+          <div class="exp">{{ explanations.probabilities.deepfake }}</div>
+        </div>
+        <div class="result-row">
+          <div class="key">probabilities.real</div>
+          <div class="val">{{ '%.4f' % result.probabilities.real if result.probabilities.real is not none else '-' }}</div>
+          <div class="exp">{{ explanations.probabilities.real }}</div>
+        </div>
+        {% endif %}
+
+        {% if result.faces_scored is defined %}
+        <div class="result-row">
+          <div class="key">faces_scored</div>
+          <div class="val">{{ result.faces_scored }}</div>
+          <div class="exp">{{ explanations.faces_scored }}</div>
+        </div>
+        {% endif %}
+
+        {% if result.score_raw is defined %}
+        <div class="result-row">
+          <div class="key">score_raw</div>
+          <div class="val">{{ '%.4f' % result.score_raw }}</div>
+          <div class="exp">Сырое значение AASIST (audio).</div>
+        </div>
+        {% endif %}
+
+        {% if explanations.notes and explanations.notes|length > 0 %}
+        <div class="notes">
+          <ul>
+            {% for n in explanations.notes %}<li>{{ n }}</li>{% endfor %}
+          </ul>
+        </div>
+        {% endif %}
+      </div>
+    {% else %}
+      <div class="alert">Нет результата: анализ не выполнился.</div>
+    {% endif %}
+  {% endif %}
+
+  <div class="actions">
+    <a class="btn" href="/">Новый анализ</a>
+  </div>
+</section>
+{% endblock %}

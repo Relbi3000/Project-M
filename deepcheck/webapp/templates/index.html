@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="panel">
+  <h2>Проверьте файл на deepfake</h2>
+  <form action="/analyze" method="post" enctype="multipart/form-data">
+    <div class="form-row">
+      <input type="file" name="file" accept="image/*,video/*,audio/*" required />
+    </div>
+    <div class="form-row">
+      <label for="sens">Чувствительность:</label>
+      <select id="sens" name="sensitivity">
+        <option value="normal">Стандартная</option>
+        <option value="conservative" selected>Более осторожная (меньше false-positive)</option>
+        <option value="aggressive">Более агрессивная (чувствительнее к артефактам)</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <button type="submit">Анализировать</button>
+    </div>
+  </form>
+  <p class="hint">
+    Поддерживаются изображения (JPG/PNG/WebP), видео (MP4/MOV/AVI/MKV) и аудио (WAV/MP3/FLAC/M4A/OGG).
+  </p>
+  <p class="hint">
+    Для аудио модель AASIST может автоматически скачать веса при первом запуске (нужен интернет и место в pretrained_models/).
+  </p>
+{% endblock %}

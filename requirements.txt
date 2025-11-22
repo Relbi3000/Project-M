@@ -6,3 +6,7 @@ facenet-pytorch
 speechbrain
 pydub
 ffmpeg-python
+fastapi
+uvicorn[standard]
+python-multipart
+jinja2
